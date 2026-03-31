@@ -325,13 +325,36 @@ function showTrollToast() {
     setTimeout(() => toast.remove(), 3500);
 }
 
+function showTrollPopupImage() {
+    if (document.querySelector('.troll-popup-img')) return;
+    
+    const img = document.createElement('img');
+    img.src = 'img/Screenshot 2026-03-31 233516.png';
+    img.className = 'troll-popup-img';
+    document.body.appendChild(img); // Add to DOM
+    
+    // Slide up
+    setTimeout(() => img.classList.add('show'), 50);
+    
+    // Play a random beep sound if we can
+    if (audioCtx && Math.random() < 0.5) playSound(600, 'square', 0.1);
+
+    // Slide down after 1.5 seconds
+    setTimeout(() => {
+        img.classList.remove('show');
+        setTimeout(() => img.remove(), 500);
+    }, 1500);
+}
+
 function showFakeAnalyze() {
     const overlay = document.createElement('div');
     overlay.className = 'fake-analyze-overlay';
     const text = analyzeTexts[Math.floor(Math.random() * analyzeTexts.length)];
     overlay.innerHTML = `
         <div class="fake-analyze-box">
-            <div class="fa-spin-container"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:2rem;color:#ff2a85;"></i></div>
+            <div class="fa-spin-container">
+                <img src="img/Screenshot 2026-03-31 233516.png" class="troll-spin-img">
+            </div>
             <p>${text}</p>
         </div>
     `;
@@ -346,12 +369,17 @@ function shakeScreen() {
 
 // Random troll events during quiz
 function startTrollSystem() {
-    // Toast every 8-15 seconds
+    // Toast or image every 8-15 seconds
     function scheduleToast() {
         const delay = 8000 + Math.random() * 7000;
         return setTimeout(() => {
             if (currentQuestionIndex > 0 && currentQuestionIndex < questions.length) {
-                showTrollToast();
+                // 30% chance to jump scare with the image, 70% chance to show toast
+                if (Math.random() < 0.3) {
+                    showTrollPopupImage();
+                } else {
+                    showTrollToast();
+                }
             }
             scheduleToast();
         }, delay);
