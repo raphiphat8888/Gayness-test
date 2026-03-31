@@ -88,14 +88,24 @@ const questions = [
             { text: "'ว้ายตายแล้ว!' / 'อุ๊ยตะเถร!'", score: 2, feedback: "แตกสาวแล้วลูกกกก หลุดอุทานคำนี้ โป๊ะแตกตู้ม!" },
             { text: "'กรี๊ดดดดด! อีดอกกกก!'", score: 3, feedback: "เสียงสูงปรี๊ดดทะลุหลอดลม! ไม่ต้องสืบแล้วจ้าาา ตัวแม่ของแทร่ล้านเปอร์เซ็นต์!" }
         ]
+    },
+    {
+        question: "11. ผู้ชายในรูปเป็นเกย์กันหรือไหม?",
+        image: "img/Gemini_Generated_Image_go3kusgo3kusgo3k.png",
+        options: [
+            { text: "เป็นสิ! สายตา ฟีลลิ่งคือใช่หมด!", score: 3, feedback: "เรดาร์ระดับพระกาฬ มองปุ๊บทะลุปรุโปร่ง!" },
+            { text: "น่าจะใช่นะ 50/50 ดูสนิทกันแปลกๆ", score: 2, feedback: "เรดาร์เริ่มทำงานนิดนึงล่ะ ความสงสัยเริ่มก่อเกิด!" },
+            { text: "ไม่ใช่เพื่อนชาย ธรรมดาๆ หรอกมั้ง", score: 1, feedback: "ใจดีไปหน่อยนะแม่ มองโลกในแง่บวกสุดๆ" },
+            { text: "เพื่อนรักกันเฉยๆ แหละ ไม่เป็นหรอก", score: 0, feedback: "ฮัลโหลลล ตาบอดจริตชัดๆ! โดนหลอกง่ายมากบอกเลย 555" }
+        ]
     }
 ];
 
 const results = [
-    { min: 0, max: 7, title: "เกย์น้อย", desc: "คุณเป็นเกย์น้อย แสดงถึงความอ่อนโยนและความสนใจในความเป็นตัวเองแบบเบาๆ ยังไม่ถึงขั้นตัวแม่แต่มีความละมุนน่ารักซ่อนอยู่", icon: "fa-solid fa-heart", color: "#ff80ab" },
-    { min: 8, max: 15, title: "เกย์ มาก", desc: "คุณเริ่มแสดงความเป็นเกย์อย่างชัดเจน มีความแซ่บและเปิดเผยตัวเองมากขึ้น", icon: "fa-solid fa-fire", color: "#ff2a85" },
-    { min: 16, max: 23, title: "เกย์ตัวแม่", desc: "คุณเป็นเกย์ตัวแม่! แฟชั่นเป๊ะ ความแซ่บเต็มสูบ ใครเห็นก็ต้องยอมรับ", icon: "fa-solid fa-crown", color: "#f5c542" },
-    { min: 24, max: 30, title: "เกย์สุดยอด", desc: "คุณเป็นเกย์สุดยอด! จุดศูนย์กลางของความแซ่บและความมั่นใจระดับสูงสุด", icon: "fa-solid fa-star", color: "#8a2be2" }
+    { min: 0, max: 8, title: "เกย์น้อย", desc: "คุณเป็นเกย์น้อย แสดงถึงความอ่อนโยนและความสนใจในความเป็นตัวเองแบบเบาๆ ยังไม่ถึงขั้นตัวแม่แต่มีความละมุนน่ารักซ่อนอยู่", icon: "fa-solid fa-heart", color: "#ff80ab" },
+    { min: 9, max: 16, title: "เกย์ มาก", desc: "คุณเริ่มแสดงความเป็นเกย์อย่างชัดเจน มีความแซ่บและเปิดเผยตัวเองมากขึ้น", icon: "fa-solid fa-fire", color: "#ff2a85" },
+    { min: 17, max: 25, title: "เกย์ตัวแม่", desc: "คุณเป็นเกย์ตัวแม่! แฟชั่นเป๊ะ ความแซ่บเต็มสูบ ใครเห็นก็ต้องยอมรับ", icon: "fa-solid fa-crown", color: "#f5c542" },
+    { min: 26, max: 33, title: "เกย์สุดยอด", desc: "คุณเป็นเกย์สุดยอด! จุดศูนย์กลางของความแซ่บและความมั่นใจระดับสูงสุด", icon: "fa-solid fa-star", color: "#8a2be2" }
 ];
 
 let currentQuestionIndex = 0;
@@ -142,6 +152,11 @@ function renderQuestion() {
         </button>`;
     });
 
+    let imageHtml = '';
+    if (question.image) {
+        imageHtml = `<div style="text-align: center;"><img src="${question.image}" class="question-image animate-in" alt="Quiz Image" /></div>`;
+    }
+
     appEl.innerHTML = `
         <div class="animate-in">
             <div class="progress-container">
@@ -152,6 +167,7 @@ function renderQuestion() {
             </div>
             
             <h2 class="question-text">${question.question}</h2>
+            ${imageHtml}
             
             <div class="options-grid">
                 ${optionsHtml}
