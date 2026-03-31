@@ -508,6 +508,9 @@ body.shake {
 
 /* ===== MOBILE RESPONSIVENESS ===== */
 @media screen and (max-width: 768px) {
+    .troll-popup-img {
+        display: none !important;
+    }
     .premium-glass-card {
         padding: 40px 25px;
         border-radius: 24px;
